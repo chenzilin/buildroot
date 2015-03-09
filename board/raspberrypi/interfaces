@@ -1,0 +1,12 @@
+# Configure Interfaces
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+	address 172.10.12.123
+	netmask 255.255.0.0
+	network 172.10.0.0
+	gateway 172.10.0.1
+	broadcast 172.10.255.255
+	dns-nameservers 8.8.8.8  8.8.8.5

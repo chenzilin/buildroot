@@ -1,0 +1,60 @@
+#!/bin/sh
+
+DAEMON=/root/demo
+NAME=demo
+DESC=demo
+
+test -x $DAEMON || exit 0
+
+set -e
+
+dpi=72
+
+fbinfo=`fbset | grep "^mode"`
+fbinfo=${fbinfo#*\"}
+fbinfo=${fbinfo%\"}
+#echo $fbinfo
+w=${fbinfo%x*}
+h=${fbinfo#*x}
+h=${h%-*}
+mmW=`expr $w \* 254 / $dpi / 10`
+mmH=`expr $h \* 254 / $dpi / 10`
+
+START_ENV="
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+QT_QPA_EGLFS_HIDECURSOR=1
+QT_QPA_EGLFS_PHYSICAL_WIDTH=$mmW
+QT_QPA_EGLFS_PHYSICAL_HEIGHT=$mmH
+"
+
+DAEMON_COMMAND="env - $START_ENV $DAEMON"
+
+cd /root
+
+case "$1" in
+	start)
+		echo -n "Starting $DESC: "
+		$DAEMON_COMMAND &
+		echo "$NAME."
+		;;
+
+	stop)
+		echo -n "Stopping $DESC: "
+		#pkill $NAME
+		;;
+
+	restart)
+		echo -n "Restarting $DESC: "
+		#pkill $NAME
+		sleep 1
+		$DAEMON_COMMAND &
+		echo "$NAME."
+		;;
+
+	*)
+		echo "Usage: $NAME {start|stop|restart}" >&2
+		exit 1
+		;;
+esac
+
+exit 0

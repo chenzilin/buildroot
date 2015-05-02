@@ -1,6 +1,7 @@
 BR2_arm=y
 BR2_arm1176jzf_s=y
 
+BR2_JLEVEL=4
 BR2_ARM_EABIHF=y
 BR2_OPTIMIZE_2=y
 

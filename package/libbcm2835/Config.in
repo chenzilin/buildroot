@@ -1,0 +1,9 @@
+config BR2_PACKAGE_LIBBCM2835
+	bool "libbcm2835"
+	depends on BR2_PACKAGE_RPI_FIRMWARE
+	help
+	  This is a C library for Raspberry Pi (RPi).
+	  It provides access to GPIO and other IO functions on the Broadcom BCM 2835 chip.
+	  Allowing access to the 26 pin ISE plug on the RPi board so you can control and interface with various external devices.
+
+	  http://www.airspayce.com/mikem/bcm2835/index.html
